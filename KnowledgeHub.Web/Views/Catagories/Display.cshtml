@@ -5,6 +5,13 @@
 
     <h4>@TempData["Message"]</h4>
     <a asp-action="Create" class="btn btn-primary">Create New Catagory</a>
+    <form asp-action="Display" method="">
+            
+          <input type="text" name="search" placeholder="Enter the keyword to Search" />
+           <input type="submit" name="btnSubmit" value="Search" /> 
+
+    </form>
+   
     @*<div class="scroll_table_display">*@
     <table class="table table-bordered">
         <thead>
@@ -25,7 +32,7 @@
                     @item.Description
                 </td>
                 <td>
-                    <a asp-action="Edit" class="btn btn-primary">Edit</a>
+                    <a asp-action="Edit" class="btn btn-primary" asp-route-id="@item.CatagoryId" >Edit</a>
                     <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.CatagoryId" >Delete</a>
                 </td>
             </tr>  

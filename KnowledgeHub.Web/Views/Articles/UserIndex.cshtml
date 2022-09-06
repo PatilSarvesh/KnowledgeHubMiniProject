@@ -1,0 +1,90 @@
+﻿@model IEnumerable<KnowledgeHub.Web.Models.Entities.Article>
+@using KnowledgeHub.Web.Models.Data
+@using KnowledgeHub.Web.Models.Entities
+@{
+    ViewData["Title"] = "UserIndex";
+}
+
+<h1>UserIndex</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArticleURL)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Catagory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PostedBy)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.DateSubmitted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsApproved)
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArticleURL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Catagory.Name)
+               
+              
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PostedBy)
+            </td>
+
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.DateSubmitted)
+            </td>
+                 @if(item.IsApproved == true)
+                {
+                    <td>
+                        Approved
+                    </td>
+                    <td>
+                          <a asp-action="Delete" asp-route-id="@item.ArticleId">Delete</a>
+                    </td>
+                }else{
+                <td>
+                    Pending
+                </td>
+                 <td>
+                <a asp-action="Edit" asp-route-id="@item.ArticleId">Edit</a> 
+                @*<a asp-action="Details" asp-route-id="@item.ArticleId">Details</a> |*@
+                <a asp-action="Delete" asp-route-id="@item.ArticleId">Delete</a>
+            </td>
+                }
+           
+        </tr>
+}
+    </tbody>
+</table>

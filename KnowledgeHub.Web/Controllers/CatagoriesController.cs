@@ -38,15 +38,27 @@ namespace KnowledgeHub.Web.Controllers
             return RedirectToAction("Display");
         }
 
-        public IActionResult Display()
+        public IActionResult Display(String search)
         {
 
             //DataSet data = new DataSet();
             //var result = from c in db.Catagories
             //             select c;
 
+            List<Catagory> catagories = null;
 
-            List<Catagory> catagories = db.Catagories.ToList();
+            if (search != null && search.Length != 0)
+            {
+                catagories = (from s in db.Catagories
+                              where s.Name.Contains(search) || s.Description.Contains(search)
+                              select s).ToList();
+                TempData["Message"] = $"we have {catagories.Count()} catagory whic contains keyword {search}";
+            }
+            else
+            {
+                catagories = db.Catagories.ToList();
+                TempData["Message"] = $"we have {catagories.Count()} catagory";
+            }
             //ViewBag.CatagoryList = from c  in db.Catagories
             //                       select c;
 
@@ -70,11 +82,37 @@ namespace KnowledgeHub.Web.Controllers
 
             return RedirectToAction("Display");
         }
-
+        [HttpGet]
         public IActionResult Edit(int id)
         {
-            var res = db.Catagories.Find(id);
-            return View(res);
+            Catagory result = db.Catagories.Find(id);
+            return View(result) ;
         }
+
+        [HttpPost]
+        public IActionResult Edit(Catagory catagory)
+        {
+            if (!ModelState.IsValid)
+                return View("Edit");
+
+            //var UpdateCatagory = db.Catagories.Find(catagory.CatagoryId);
+            //UpdateCatagory.Name = catagory.Name;
+            //UpdateCatagory.Description = catagory.Description;   //wrong aproach
+
+            db.Entry(catagory).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            
+            db.SaveChanges();
+            TempData["Message"] = $"Catagory {catagory.Name} Has Updated";
+
+            return RedirectToAction("Display");
+        }
+
+        public IActionResult Search()
+        {
+            
+            return View();
+        }
+
+
     }
 }
