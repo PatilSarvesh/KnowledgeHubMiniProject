@@ -145,17 +145,21 @@
         @*<td>
             @Html.DisplayFor(modelItem => item.IsApproved)
         </td>*@
+        
         @if(item.IsApproved==false){
         <td>
-                    <a asp-action="Approve" class="btn btn-primary" asp-route-id="@item.ArticleId" >Approve</a>
-                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.ArticleId" >Delete</a>
+                    <a asp-action="Approve" class="btn btn-primary" asp-route-id="@item.ArticleId" >Approve/Reject</a>
+                 @*   <a  class="btn btn-light" >Rejected</a>*@
+                  @*  <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.ArticleId" >Delete</a>*@
                 </td>
             }
             else
             {
                 <td>
+
                   <a  class="btn btn-light"  >Approved</a>
-                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.ArticleId" >Delete</a>
+                    <a asp-action="Reject"  class="btn btn-danger" asp-route-id="@item.ArticleId" >Delete</a>
+                     
                     </td>
             }
 

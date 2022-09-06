@@ -48,15 +48,25 @@
                 <input asp-for="DateSubmitted" class="form-control" />
                 <span asp-validation-for="DateSubmitted" class="text-danger"></span>
             </div>*@
-
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" formaction="Approve" value="Approve" class="btn btn-primary" />
+                @*<input type="submit" formaction="Reject" value="Reject" class="btn btn-primary" />*@
+                 
             </div>
+            
         </form>
+       
     </div>
 </div>
 
+@*<form>
+    <div>
+    <a asp-action="Reject" class="btn btn-danger" asp-route-id="@Model.ArticleId" >Reject</a>
+    <a asp-action="Index">Back to List</a>
+</div>
+</form>*@
 <div>
+    <a asp-action="Reject" class="btn btn-danger" asp-route-id="@Model.ArticleId" >Reject</a>
     <a asp-action="Index">Back to List</a>
 </div>
 

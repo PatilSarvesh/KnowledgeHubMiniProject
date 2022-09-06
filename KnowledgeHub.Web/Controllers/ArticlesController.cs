@@ -3,6 +3,7 @@ using KnowledgeHub.Web.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Humanizer;
+using Xceed.Wpf.Toolkit;
 
 namespace KnowledgeHub.Web.Controllers
 {
@@ -20,7 +21,10 @@ namespace KnowledgeHub.Web.Controllers
                             select c).ToList();
                 return View(articles);
             }
-             articles = db.Articles.ToList();
+
+
+            
+            articles = db.Articles.ToList();
             return View(articles);
         }
 
@@ -28,7 +32,7 @@ namespace KnowledgeHub.Web.Controllers
         {
             List<Article> articles = null; 
             articles = (from c in db.Articles
-                       where c.PostedBy == article.PostedBy
+                       where  c.PostedBy == article.PostedBy
                        select c).ToList();
                        
             return View(articles);
@@ -45,11 +49,26 @@ namespace KnowledgeHub.Web.Controllers
         {
             var res = db.Articles.Find(article.ArticleId);
             res.IsApproved = true;
+            
             //res.IsApproved = article.IsApproved;
             db.SaveChanges();
             
             return RedirectToAction("Index");
         }
+
+        public IActionResult Reject(int id)
+        {
+           //MessageBox.Show("My message here");
+           // string script = "<script type = 'text/javascript'>alert('Hello');</script>";
+            var res = db.Articles.Find(id);
+            db.Remove(res);
+
+            //res.IsApproved = true;
+            db.SaveChanges();
+            
+            return RedirectToAction("Index");
+        }
+
 
         [HttpGet]
         public IActionResult Create()
